@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/test_ocean.gd" type="Script" id=1]
+[ext_resource path="res://shaders/ocean.shader" type="Shader" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/wave_0 = Plane( 30, 10, 0.3, 0.7 )
+shader_param/wave_1 = Plane( 10, 3, 0.5, 0.5 )
+shader_param/wave_2 = Plane( 5, 1.2, 0.1, 0.9 )
+shader_param/water_time = 0.0
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+size = Vector3( 256, 64, 256 )
+subdivide_width = 256
+subdivide_depth = 256
+
+[node name="test_ocean" type="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+script = ExtResource( 1 )

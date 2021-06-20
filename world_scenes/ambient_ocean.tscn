@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shaders/small_gerstner.shader" type="Shader" id=1]
+[ext_resource path="res://scripts/ambient_ocean.gd" type="Script" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/Q = 0.2
+shader_param/wave_0 = Plane( 30, 7.5, 0.6679, -0.365937 )
+shader_param/wave_1 = Plane( 3.75931, 0.225558, -0.242432, 0.72196 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+size = Vector3( 256, 64, 256 )
+subdivide_width = 256
+subdivide_depth = 256
+
+[node name="ambient_ocean" type="MeshInstance"]
+mesh = SubResource( 2 )
+material/0 = null
+script = ExtResource( 2 )
