@@ -1,12 +1,20 @@
 extends Spatial
 
-var wind_strength = 13.4
-var wind_direction = Vector2(0.3, 0.7)
+export var wind_strength = 13.4
+export var wind_direction = Vector2(0.3, 0.7)
+
+func set_wind(strength, direction):
+	wind_strength = strength
+	wind_direction = direction
+	for child in get_children():
+		if "wind_strength" in child:
+			child.wind_strength = wind_strength
+		if "wind_direction" in child:
+			child.wind_direction = wind_direction
 
 func _ready():
 	$"main-ship".water_node = $test_ocean
-	$"main-ship".wind_direction = wind_direction
-	$"main-ship".wind_strength = wind_strength
+	set_wind(50, Vector2(0.3, 0.7))
 
 var time: float = 0.0
 #func _physics_process(delta):

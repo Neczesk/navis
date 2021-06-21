@@ -69,12 +69,13 @@ surfaces/0 = {
 }
 
 [sub_resource type="CapsuleShape" id=5]
-radius = 2.34604
+radius = 3.23891
 height = 15.2408
 
 [node name="main-ship" type="RigidBody"]
-transform = Transform( -1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 0, 0, 0 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0 )
 script = ExtResource( 3 )
+bouyancy = 50000
 
 [node name="Cube" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
@@ -111,10 +112,10 @@ transform = Transform( -0.977359, -0.202988, -0.0597151, -0.191586, 0.968769, -0
 [node name="BouyancyPoint" parent="CenterOfBouyancy" instance=ExtResource( 4 )]
 
 [node name="BouyancyPoint3" parent="CenterOfBouyancy" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04003, 0, 5.09646 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28153, 0, 7.73587 )
 
 [node name="BouyancyPoint4" parent="CenterOfBouyancy" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.95398, 0, 5.09646 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25224, 0, 7.73588 )
 
 [node name="BouyancyPoint5" parent="CenterOfBouyancy" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0188259, 0, 10.1849 )

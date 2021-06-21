@@ -12,9 +12,9 @@ shader_param/water_time = 0.0
 
 [sub_resource type="CubeMesh" id=2]
 material = SubResource( 1 )
-size = Vector3( 256, 64, 256 )
-subdivide_width = 256
-subdivide_depth = 256
+size = Vector3( 2048, 128, 2048 )
+subdivide_width = 512
+subdivide_depth = 512
 
 [node name="test_ocean" type="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0 )

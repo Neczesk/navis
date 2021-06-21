@@ -1,9 +1,37 @@
 extends MeshInstance
 
+var wind_direction: Vector2 setget set_wind_direction
+var wind_strength: float setget set_wind_strength
+var _median_wave_height: float
+var _median_wavelength: float
+func set_wind_direction(new_direction: Vector2):
+	wind_direction = new_direction
+	generate_waves()
+	
+func set_wind_strength(new_strength: float):
+	wind_strength = new_strength
+	_median_wave_height = pow(wind_strength, 2) * 0.0015
+	_median_wavelength = pow(wind_strength, 2) * 0.025
+	generate_waves()
+
 var wave_0: Plane = Plane(5.0, 1.0, 0.3, 0.7)
 var wave_1: Plane = Plane(1.0, 0.30, 0.5, 0.5)
 var wave_2: Plane = Plane(0.1, 0.06, 0.1, 0.9)
 var water_time: float = 0 setget set_water_time
+
+func generate_waves():
+	var median_ratio = _median_wave_height / _median_wavelength
+	var cur_length = _median_wavelength * rand_range(0.9, 1.2)
+	wave_0 = Plane(cur_length, median_ratio * cur_length, wind_direction.x, wind_direction.y)
+	cur_length = _median_wavelength * rand_range(0.4, 0.7)
+	var cur_direction = wind_direction.rotated(rand_range(-PI/4, PI/4))
+	wave_1 = Plane(cur_length, median_ratio * cur_length, cur_direction.x, cur_direction.y)
+	cur_length = _median_wavelength * rand_range(0.1, 0.3)
+	cur_direction = wind_direction.rotated(rand_range(-PI/2, PI/2))
+	wave_2 = Plane(cur_length, median_ratio * cur_length, cur_direction.x, cur_direction.y)
+	get_active_material(0).set_shader_param("wave_0", wave_0)
+	get_active_material(0).set_shader_param("wave_1", wave_1)
+	get_active_material(0).set_shader_param("wave_2", wave_2)
 
 func set_water_time(new_time):
 	water_time = new_time

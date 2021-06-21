@@ -43,15 +43,15 @@ func _integrate_forces(state):
 		
 	var forward: Vector3 = transform.basis.z
 	var wind3 = Vector3(wind_direction.x, 0, wind_direction.y)
-	forward *= wind_strength * 0.4
-#	print(forward.dot(wind3))
-	forward *= max(forward.dot(wind3)+1,0.4)
 
-	forward *= (sail_level * sail_area)
+#	print(forward.dot(wind3))
+	forward *= max(forward.dot(wind3)+1,0.2)
+	forward *= (sail_level * sail_area * wind_strength)
 #	print(forward.normalized())
 #	print(forward)
 #	print(Vector2(self.rotation.x, self.rotation.z).dot(wind_direction))
-	print(forward)
+#	print(forward)
+	
 	add_central_force(forward)
 	
 	if Input.is_action_pressed("steer_left"):
