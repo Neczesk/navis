@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://meshes/main-ship-model.gltf" type="PackedScene" id=1]
+[ext_resource path="res://scripts/sail_airship_1.gd" type="Script" id=2]
+
+[node name="sail_ship_1" instance=ExtResource( 1 )]
+script = ExtResource( 2 )

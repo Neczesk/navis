@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/airship.gd" type="Script" id=1]
-[ext_resource path="res://meshes/main-ship-model.gltf" type="PackedScene" id=2]
+[ext_resource path="res://ship_scenes/sail_airship_1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/bouyancy_point.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -14,9 +14,10 @@ linear_damp = 2.0
 angular_damp = 2.0
 script = ExtResource( 1 )
 sail_area = 1000.0
-rudder_power = 1000.0
+rudder_power = 10000.0
+bouyancy_delta = 50.0
 
-[node name="main-ship-model" parent="." instance=ExtResource( 2 )]
+[node name="sail_ship_1" parent="." instance=ExtResource( 2 )]
 
 [node name="camera_pivot" type="Spatial" parent="."]
 transform = Transform( 0.965926, -0.12941, -0.224144, 0, 0.866025, -0.5, 0.258819, 0.482963, 0.836516, 0, 0, 0 )
