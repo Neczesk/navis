@@ -13,8 +13,8 @@ func set_wind(strength, direction):
 			child.wind_direction = wind_direction
 
 func _ready():
-	$"main-ship".water_node = $test_ocean
-	set_wind(50, Vector2(0.3, 0.7))
+
+	set_wind(10, Vector2(0.3, 0.7))
 
 var time: float = 0.0
 #func _physics_process(delta):

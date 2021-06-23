@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/airship.gd" type="Script" id=1]
+[ext_resource path="res://meshes/main-ship-model.gltf" type="PackedScene" id=2]
+[ext_resource path="res://scripts/bouyancy_point.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 4.57895
+height = 13.7166
+
+[node name="airship" type="RigidBody"]
+mass = 1000.0
+linear_damp = 2.0
+angular_damp = 2.0
+script = ExtResource( 1 )
+sail_area = 1000.0
+rudder_power = 1000.0
+
+[node name="main-ship-model" parent="." instance=ExtResource( 2 )]
+
+[node name="camera_pivot" type="Spatial" parent="."]
+transform = Transform( 0.965926, -0.12941, -0.224144, 0, 0.866025, -0.5, 0.258819, 0.482963, 0.836516, 0, 0, 0 )
+
+[node name="main_camera" type="Camera" parent="camera_pivot"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -25.7259 )
+
+[node name="collision_mesh" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="bouyancy_controller" type="Spatial" parent="."]
+
+[node name="bouyancy_point" type="Spatial" parent="bouyancy_controller"]
+script = ExtResource( 3 )
