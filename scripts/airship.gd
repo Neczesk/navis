@@ -39,8 +39,8 @@ func orbit_camera():
 	var d_y = d_pos.y
 	cam_rot_y += d_y
 	$camera_pivot.transform.basis = Basis()
-	$camera_pivot.rotate_object_local(Vector3(0,1,0), cam_rot_x * PLAYER_LOOK_SPEED)
-	$camera_pivot.rotate_object_local(Vector3(1,0,0), -cam_rot_y * PLAYER_LOOK_SPEED)
+	$camera_pivot.rotate_object_local(Vector3(0,1,0), -cam_rot_x * PLAYER_LOOK_SPEED)
+	$camera_pivot.rotate_object_local(Vector3(1,0,0), cam_rot_y * PLAYER_LOOK_SPEED)
 	mouse_reference = current_mouse
 	
 		
