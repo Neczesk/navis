@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://world_scenes/rock2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/world.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://ui_scenes/compass_dial.tscn" type="PackedScene" id=4]
 [ext_resource path="res://world_scenes/test_ocean.tscn" type="PackedScene" id=5]
 [ext_resource path="res://default_env.tres" type="Environment" id=6]
+[ext_resource path="res://textures/2d/ballast_counter.png" type="Texture" id=7]
+[ext_resource path="res://scripts/current_ballast.gd" type="Script" id=8]
 
 [sub_resource type="World" id=2]
 environment = ExtResource( 6 )
@@ -39,7 +41,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -128, 25.1242, -128 )
 linear_damp = -1.0
 angular_damp = -1.0
 rudder_power = 5e+06
-bouyancy_delta = 2000.0
 
 [node name="ui_layer" type="CanvasLayer" parent="."]
 
@@ -104,12 +105,48 @@ margin_bottom = 130.0
 text = "KMH"
 align = 1
 
-[node name="play_window" type="Control" parent="ui_layer/margin_container/main_vbox"]
+[node name="play_window" type="HBoxContainer" parent="ui_layer/margin_container/main_vbox"]
 margin_top = 134.0
 margin_right = 1550.0
 margin_bottom = 715.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.44
+
+[node name="left" type="Control" parent="ui_layer/margin_container/main_vbox/play_window"]
+margin_right = 1433.0
+margin_bottom = 581.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 12.83
+
+[node name="elevation_display" type="VBoxContainer" parent="ui_layer/margin_container/main_vbox/play_window"]
+margin_left = 1437.0
+margin_right = 1550.0
+margin_bottom = 581.0
+size_flags_horizontal = 3
+
+[node name="ballast_display" type="TextureRect" parent="ui_layer/margin_container/main_vbox/play_window/elevation_display"]
+margin_right = 113.0
+margin_bottom = 563.0
+size_flags_vertical = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+flip_v = true
+
+[node name="current_ballast" type="Control" parent="ui_layer/margin_container/main_vbox/play_window/elevation_display/ballast_display"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+current_ballast = 100.0
+
+[node name="elevation_label" type="Label" parent="ui_layer/margin_container/main_vbox/play_window/elevation_display"]
+margin_top = 567.0
+margin_right = 113.0
+margin_bottom = 581.0
+text = "640 m (Sea Level)"
 
 [node name="bottom_panel" type="Control" parent="ui_layer/margin_container/main_vbox"]
 margin_top = 719.0

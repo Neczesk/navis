@@ -5,9 +5,10 @@ var wind_direction: Vector2
 var wind_strength: float
 export var sail_area: float 
 export var rudder_power: float
-export var bouyancy_delta: float = 5000
-export var sail_delta: float = 1
+export var bouyancy_delta: float = 1
+export var sail_delta: float = 100
 var ground_speed: float = 0
+var ballast_display: Node
 
 var sail_level: float setget set_sail_level
 func set_sail_level(new_sail):
@@ -23,9 +24,7 @@ func set_sail_level(new_sail):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$sail_ship_1.set_sail_level(sail_level)
-	$bouyancy_controller/bouyancy_point.max_bouyancy = weight*1.5
-	$bouyancy_controller/bouyancy_point.min_bouyancy = weight*0.5
-	$bouyancy_controller/bouyancy_point.bouyancy = weight 
+	$bouyancy_controller/bouyancy_point.base_bouyancy = weight 
 	pass # Replace with function body.
 	
 func _integrate_forces(state):
@@ -49,9 +48,10 @@ func _integrate_forces(state):
 	if Input.is_action_pressed("remove_sail"):
 		set_sail_level(sail_level-(sail_delta * state.step))
 	if Input.is_action_pressed("lower_ballast"):
-		$bouyancy_controller/bouyancy_point.bouyancy += bouyancy_delta * state.step
+		$bouyancy_controller/bouyancy_point.bouyancy_mod += bouyancy_delta * state.step
+		print(bouyancy_delta)
 	if Input.is_action_pressed("raise_ballast"):
-		$bouyancy_controller/bouyancy_point.bouyancy -= bouyancy_delta * state.step
+		$bouyancy_controller/bouyancy_point.bouyancy_mod -= bouyancy_delta * state.step
 			
 	var current_lin_vel: Vector3 = state.linear_velocity
 	var current_ang_vel: Vector3 = state.angular_velocity
@@ -64,6 +64,9 @@ func _integrate_forces(state):
 	add_torque(ang_drag)
 	
 	ground_speed = (Vector2(state.linear_velocity.x, state.linear_velocity.z).length() * 60 * 60) / 1000
+	if ballast_display:
+		if "current_ballast" in ballast_display:
+			ballast_display.current_ballast = $bouyancy_controller/bouyancy_point.bouyancy_mod
 	
 	
 

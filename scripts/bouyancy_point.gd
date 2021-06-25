@@ -2,13 +2,13 @@ extends Spatial
 
 # This script is intended to be used with airship scenes
 
-export var bouyancy: float setget set_bouyancy
-var min_bouyancy: float
-var max_bouyancy: float
-var bouyant_force: Vector3
+export var base_bouyancy: float
+var bouyancy_mod: float = 100 setget set_bouyancy_mod
 
-func set_bouyancy(new_bouyancy):
-	bouyancy = clamp(new_bouyancy, min_bouyancy, max_bouyancy)
+func set_bouyancy_mod(new_mod: float):
+	bouyancy_mod = clamp(new_mod, 50, 200)
+
+var bouyant_force: Vector3
 	
 
 # Declare member variables here. Examples:
@@ -21,7 +21,7 @@ func _ready():
 	pass # Replace with function body.
 	
 func _physics_process(delta):
-	bouyant_force = Vector3(0.0, bouyancy, 0.0)
+	bouyant_force = Vector3(0.0, base_bouyancy * (bouyancy_mod/100), 0.0)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

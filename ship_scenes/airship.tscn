@@ -15,7 +15,7 @@ angular_damp = 2.0
 script = ExtResource( 1 )
 sail_area = 1000.0
 rudder_power = 10000.0
-bouyancy_delta = 50.0
+bouyancy_delta = 100.0
 
 [node name="sail_ship_1" parent="." instance=ExtResource( 2 )]
 
