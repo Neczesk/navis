@@ -6,9 +6,11 @@ var wind_strength: float
 export var sail_area: float 
 export var rudder_power: float
 export var bouyancy_delta: float = 1
-export var sail_delta: float = 100
+export var sail_delta: float = 0.1
 var ground_speed: float = 0
 var ballast_display: Node
+
+var PLAYER_LOOK_SPEED: float = 0.01
 
 var sail_level: float setget set_sail_level
 func set_sail_level(new_sail):
@@ -20,7 +22,28 @@ func set_sail_level(new_sail):
 # var a = 2
 # var b = "text"
 
+var mouse_reference: Vector2
+func _process(delta):
+	if Input.is_action_just_pressed("orbit_camera"):
+		mouse_reference = get_viewport().get_mouse_position()
+	if Input.is_action_pressed("orbit_camera"):
+		orbit_camera()
 
+var cam_rot_x: float = 0
+var cam_rot_y: float = 0
+func orbit_camera():
+	var current_mouse: Vector2 = get_viewport().get_mouse_position()
+	var d_pos = current_mouse - mouse_reference
+	var d_x = d_pos.x
+	cam_rot_x += d_x
+	var d_y = d_pos.y
+	cam_rot_y += d_y
+	$camera_pivot.transform.basis = Basis()
+	$camera_pivot.rotate_object_local(Vector3(0,1,0), cam_rot_x * PLAYER_LOOK_SPEED)
+	$camera_pivot.rotate_object_local(Vector3(1,0,0), -cam_rot_y * PLAYER_LOOK_SPEED)
+	mouse_reference = current_mouse
+	
+		
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$sail_ship_1.set_sail_level(sail_level)
