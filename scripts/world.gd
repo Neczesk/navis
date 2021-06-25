@@ -1,24 +1,31 @@
 extends Spatial
 
 export var wind_strength = 13.4
-export var wind_direction = Vector2(0.3, 0.7)
+export var wind_heading: float = 0
 
-func set_wind(strength, direction):
+func set_wind(strength: float, direction: float):
 	wind_strength = strength
-	wind_direction = direction
+	wind_heading = direction
 	for child in get_children():
 		if "wind_strength" in child:
 			child.wind_strength = wind_strength
 		if "wind_direction" in child:
-			child.wind_direction = wind_direction
+			child.wind_direction = degrees_to_vector(wind_heading)
+		if "wind_heading" in child:
+			child.wind_heading = wind_heading
+	$heading_viewport/compass_dial.wind_direction = wind_heading
+	
+	$ui_layer/margin_container/main_vbox/top_panel/navigation_display/wind_strength_label.text = str(wind_strength) + " KM/H"
 
 func _ready():
-
-	set_wind(10, Vector2(0.3, 0.7))
+	set_wind(10, 0)
+	
+	
+func degrees_to_vector(degrees: float) -> Vector2:
+	return Vector2(sin(deg2rad(degrees)), cos(deg2rad(degrees)))
 
 var time: float = 0.0
-#func _physics_process(delta):
-#	for child in get_children():
-#		if "water_level" in child:
-#			var hpos = Vector2(child.global_transform.origin.x, child.global_transform.origin.z)
-#			child.water_level = $ambient_ocean.get_height_at_point(hpos, time)
+
+func _physics_process(delta):
+	$heading_viewport/compass_dial.heading = $airship.rotation_degrees.y
+	$ui_layer/margin_container/main_vbox/top_panel/navigation_display/ground_speed_label.text = str(round($airship.ground_speed)) + " KM/H"

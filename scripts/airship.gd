@@ -7,6 +7,8 @@ export var sail_area: float
 export var rudder_power: float
 export var bouyancy_delta: float = 5000
 export var sail_delta: float = 1
+var ground_speed: float = 0
+
 var sail_level: float setget set_sail_level
 func set_sail_level(new_sail):
 	sail_level = clamp(new_sail, 0.0, 1.0)
@@ -60,6 +62,8 @@ func _integrate_forces(state):
 	
 	add_central_force(lin_drag)
 	add_torque(ang_drag)
+	
+	ground_speed = (Vector2(state.linear_velocity.x, state.linear_velocity.z).length() * 60 * 60) / 1000
 	
 	
 

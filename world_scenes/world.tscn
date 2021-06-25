@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://world_scenes/rock2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/world.gd" type="Script" id=2]
 [ext_resource path="res://ship_scenes/airship.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui_scenes/compass_dial.tscn" type="PackedScene" id=4]
 [ext_resource path="res://world_scenes/test_ocean.tscn" type="PackedScene" id=5]
+[ext_resource path="res://default_env.tres" type="Environment" id=6]
+
+[sub_resource type="World" id=2]
+environment = ExtResource( 6 )
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("heading_viewport")
 
 [node name="world" type="Spatial"]
 script = ExtResource( 2 )
@@ -15,9 +23,96 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 128, -64, 128 )
 [node name="rock-structure-2" parent="." instance=ExtResource( 1 )]
 transform = Transform( 10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -152.083, 0, -85.1457 )
 
+[node name="heading_viewport" type="Viewport" parent="."]
+size = Vector2( 312, 312 )
+own_world = true
+world = SubResource( 2 )
+transparent_bg = true
+msaa = 1
+render_target_v_flip = true
+gui_disable_input = true
+
+[node name="compass_dial" parent="heading_viewport" instance=ExtResource( 4 )]
+
 [node name="airship" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -128, 25.1242, -128 )
 linear_damp = -1.0
 angular_damp = -1.0
 rudder_power = 5e+06
 bouyancy_delta = 2000.0
+
+[node name="ui_layer" type="CanvasLayer" parent="."]
+
+[node name="margin_container" type="MarginContainer" parent="ui_layer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 25.0
+margin_right = -25.0
+margin_bottom = -25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="main_vbox" type="VBoxContainer" parent="ui_layer/margin_container"]
+margin_right = 1550.0
+margin_bottom = 850.0
+
+[node name="top_panel" type="HBoxContainer" parent="ui_layer/margin_container/main_vbox"]
+margin_right = 1550.0
+margin_bottom = 130.0
+size_flags_vertical = 3
+
+[node name="left_top_bar" type="Control" parent="ui_layer/margin_container/main_vbox/top_panel"]
+margin_right = 123.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+
+[node name="center_top_bar" type="Control" parent="ui_layer/margin_container/main_vbox/top_panel"]
+margin_left = 127.0
+margin_right = 1422.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 10.48
+
+[node name="navigation_display" type="VBoxContainer" parent="ui_layer/margin_container/main_vbox/top_panel"]
+margin_left = 1426.0
+margin_right = 1550.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+
+[node name="compass_view" type="TextureRect" parent="ui_layer/margin_container/main_vbox/top_panel/navigation_display"]
+margin_right = 124.0
+margin_bottom = 94.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="wind_strength_label" type="Label" parent="ui_layer/margin_container/main_vbox/top_panel/navigation_display"]
+margin_top = 98.0
+margin_right = 124.0
+margin_bottom = 112.0
+text = "KMH"
+align = 1
+
+[node name="ground_speed_label" type="Label" parent="ui_layer/margin_container/main_vbox/top_panel/navigation_display"]
+margin_top = 116.0
+margin_right = 124.0
+margin_bottom = 130.0
+text = "KMH"
+align = 1
+
+[node name="play_window" type="Control" parent="ui_layer/margin_container/main_vbox"]
+margin_top = 134.0
+margin_right = 1550.0
+margin_bottom = 715.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.44
+
+[node name="bottom_panel" type="Control" parent="ui_layer/margin_container/main_vbox"]
+margin_top = 719.0
+margin_right = 1550.0
+margin_bottom = 850.0
+size_flags_vertical = 3
