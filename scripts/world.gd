@@ -29,5 +29,5 @@ var time: float = 0.0
 
 func _physics_process(delta):
 	$heading_viewport/compass_dial.heading = $airship.rotation_degrees.y
-	$ui_layer/margin_container/main_vbox/top_panel/navigation_display/ground_speed_label.text = str(round($airship.ground_speed)) + " KM/H"
+	$ui_layer/margin_container/main_vbox/top_panel/navigation_display/ground_speed_label.text = str(round($airship.ground_speed_current)) + " KM/H"
 	$ui_layer/margin_container/main_vbox/play_window/elevation_display/elevation_label.text = str(round($airship.global_transform.origin.y)) + " m (Sea Level)"
