@@ -6,11 +6,11 @@ var wind_strength: float
 export var sail_area: float 
 export var rudder_power: float
 export var bouyancy_delta: float = 1
-export var sail_delta: float = 0.1
+export var sail_delta: float = 1
 var ground_speed: float = 0
 var ballast_display: Node
 
-var PLAYER_LOOK_SPEED: float = 0.01
+var PLAYER_LOOK_SPEED: float = 0.001
 
 var sail_level: float setget set_sail_level
 func set_sail_level(new_sail):
